@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineStoreInventory.DataBase;
-
-// Проверьте правильность пространства имен
 
 namespace OnlineStoreInventory
 {
@@ -10,19 +10,19 @@ namespace OnlineStoreInventory
     {
         private readonly ApplicationDbContext _context;
 
-        // Конструктор, вызываемый DI
+        // Конструктор, вызываемый через DI
         public MainWindow(ApplicationDbContext context)
         {
             _context = context;
             InitializeComponent();
 
-            // Пример загрузки данных после инициализации окна:
+            // Загрузка данных при инициализации окна
             LoadCategories();
             LoadProducts();
         }
 
-        public MainWindow() : this(
-            ((App)Application.Current).ServiceProvider.GetRequiredService<ApplicationDbContext>())
+        // Конструктор по умолчанию для XAML (делегирует DI)
+        public MainWindow() : this(App.ServiceProvider.GetRequiredService<ApplicationDbContext>())
         {
         }
 
@@ -35,42 +35,37 @@ namespace OnlineStoreInventory
             CategoryComboBox.SelectedValuePath = "Id";
         }
 
-        // Загрузка продуктов в ListBox
+        // Загрузка продуктов в ListView
         private void LoadProducts()
         {
             var products = _context.Products.ToList(); // Получаем все продукты из базы данных
-            ProductListView.ItemsSource = products; // Привязываем их к ListBox
-
+            ProductListView.ItemsSource = products; // Привязываем их к ListView
         }
 
-        // Обработчик клика по кнопке "Add Product"
+        // Обработчик клика по кнопке "Добавить товар"
         private void OnAddProductClick(object sender, RoutedEventArgs e)
         {
-            // Получаем данные из полей
             var productName = ProductNameTextBox.Text;
             var barcode = BarcodeTextBox.Text;
             var price = 0m;
             var weight = 0f;
             var minStock = 0;
 
-            // Пробуем преобразовать введенные значения в числовые
             if (!decimal.TryParse(PriceTextBox.Text, out price) ||
                 !float.TryParse(WeightTextBox.Text, out weight) ||
                 !int.TryParse(MinStockTextBox.Text, out minStock))
             {
-                MessageBox.Show("Введите значения цены, веса и минимального запаса.");
+                MessageBox.Show("Введите корректные значения цены, веса и минимального запаса.");
                 return;
             }
 
             var categoryId = (int?)CategoryComboBox.SelectedValue;
-
             if (string.IsNullOrWhiteSpace(productName) || categoryId == null || string.IsNullOrWhiteSpace(barcode))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.");
                 return;
             }
 
-            // Создаем новый объект продукта
             var newProduct = new Product
             {
                 Name = productName,
@@ -83,11 +78,9 @@ namespace OnlineStoreInventory
                 Category = _context.Categories.FirstOrDefault(c => c.Id == categoryId.Value)
             };
 
-            // Добавляем новый продукт в базу данных
             _context.Products.Add(newProduct);
             _context.SaveChanges();
 
-            // Очищаем поля
             ProductNameTextBox.Clear();
             BarcodeTextBox.Clear();
             PriceTextBox.Clear();
@@ -96,17 +89,13 @@ namespace OnlineStoreInventory
             MinStockTextBox.Clear();
             CategoryComboBox.SelectedIndex = -1;
 
-            // Показываем успешное сообщение
             MessageBox.Show("Товар успешно добавлен!");
-
-            // Обновляем список продуктов
             LoadProducts();
         }
 
-        // Обработчик клика по кнопке "Delete Product"
+        // Обработчик клика по кнопке "Удалить товар"
         private void OnDeleteProductClick(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранный продукт из ListBox
             var selectedProduct = ProductListView.SelectedItem as Product;
             if (selectedProduct == null)
             {
@@ -114,22 +103,18 @@ namespace OnlineStoreInventory
                 return;
             }
 
-            // Запрашиваем подтверждение у пользователя
-            var result = MessageBox.Show($"Вы уверены, что хотите удалить товар? \"{selectedProduct.Name}\"?",
-                "Confirm Deletion",
+            var result = MessageBox.Show($"Вы уверены, что хотите удалить товар \"{selectedProduct.Name}\"?",
+                "Подтверждение удаления",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    // Удаляем выбранный продукт из базы данных
                     _context.Products.Remove(selectedProduct);
                     _context.SaveChanges();
 
                     MessageBox.Show("Товар успешно удален!");
-
-                    // Обновляем список продуктов
                     LoadProducts();
                 }
                 catch (Exception ex)
@@ -139,19 +124,18 @@ namespace OnlineStoreInventory
             }
         }
 
+        // Обработчик клика по кнопке "Обновить товар"
         private void OnUpdateProductClick(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранный товар из ListBox
             var selectedProduct = ProductListView.SelectedItem as Product;
             if (selectedProduct == null)
             {
-                MessageBox.Show("Пожалуйста, выберите продукт для обновления данных.");
+                MessageBox.Show("Пожалуйста, выберите товар для обновления.");
                 return;
             }
 
             bool updated = false;
 
-            // Если имя изменилось, обновляем его
             if (!string.IsNullOrWhiteSpace(ProductNameTextBox.Text) &&
                 ProductNameTextBox.Text != selectedProduct.Name)
             {
@@ -159,7 +143,6 @@ namespace OnlineStoreInventory
                 updated = true;
             }
 
-            // Если штрихкод изменился, обновляем его
             if (!string.IsNullOrWhiteSpace(BarcodeTextBox.Text) &&
                 BarcodeTextBox.Text != selectedProduct.Barcode)
             {
@@ -167,7 +150,6 @@ namespace OnlineStoreInventory
                 updated = true;
             }
 
-            // Если цена изменена, пытаемся распарсить и обновить
             if (!string.IsNullOrWhiteSpace(PriceTextBox.Text))
             {
                 if (decimal.TryParse(PriceTextBox.Text, out decimal newPrice))
@@ -185,7 +167,6 @@ namespace OnlineStoreInventory
                 }
             }
 
-            // Если вес изменился, пытаемся распарсить и обновить
             if (!string.IsNullOrWhiteSpace(WeightTextBox.Text))
             {
                 if (float.TryParse(WeightTextBox.Text, out float newWeight))
@@ -203,7 +184,6 @@ namespace OnlineStoreInventory
                 }
             }
 
-            // Если размеры изменились, обновляем их
             if (!string.IsNullOrWhiteSpace(DimensionsTextBox.Text) &&
                 DimensionsTextBox.Text != selectedProduct.Dimensions)
             {
@@ -211,7 +191,6 @@ namespace OnlineStoreInventory
                 updated = true;
             }
 
-            // Если минимальный остаток изменился, пытаемся распарсить и обновить
             if (!string.IsNullOrWhiteSpace(MinStockTextBox.Text))
             {
                 if (int.TryParse(MinStockTextBox.Text, out int newMinStock))
@@ -224,19 +203,17 @@ namespace OnlineStoreInventory
                 }
                 else
                 {
-                    MessageBox.Show("Неверная минимальная стоимость.");
+                    MessageBox.Show("Неверное значение минимального запаса.");
                     return;
                 }
             }
 
-            // Если категория изменена, обновляем её
             if (CategoryComboBox.SelectedValue != null)
             {
                 int newCategoryId = (int)CategoryComboBox.SelectedValue;
                 if (newCategoryId != selectedProduct.CategoryId)
                 {
                     selectedProduct.CategoryId = newCategoryId;
-                    
                     selectedProduct.Category = _context.Categories.FirstOrDefault(c => c.Id == newCategoryId);
                     updated = true;
                 }
@@ -244,7 +221,7 @@ namespace OnlineStoreInventory
 
             if (!updated)
             {
-                MessageBox.Show("No changes detected.");
+                MessageBox.Show("Изменения не обнаружены.");
                 return;
             }
 
@@ -254,41 +231,40 @@ namespace OnlineStoreInventory
                 _context.SaveChanges();
 
                 MessageBox.Show("Продукт успешно обновлен!");
-                LoadProducts(); // Обновляем список продуктов, если требуется
+                LoadProducts();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка обновления продукта: {ex.Message}");
             }
         }
-        
+
+        // Открытие окна с группировкой товаров
         private void OnShowGroupedProductsClick(object sender, RoutedEventArgs e)
         {
-            // Создаем новое окно и передаем в него текущий контекст БД
             var groupedWindow = new GroupedProductsWindow(_context);
             groupedWindow.Show();
         }
-        
+
+        // Открытие окна с оповещениями о низком остатке
         private void OnShowLowStockAlertsClick(object sender, RoutedEventArgs e)
         {
-            
             var alertsWindow = new LowStockAlertsWindow(_context);
             alertsWindow.Show();
         }
-        
+
+        // Открытие окна расширенного поиска товаров
         private void OnOpenProductSearchClick(object sender, RoutedEventArgs e)
         {
-
             var searchWindow = new ProductSearchWindow(_context);
             searchWindow.Show();
         }
-        
+
+        // Открытие окна отчётов и аналитики
         private void OnOpenReportsClick(object sender, RoutedEventArgs e)
         {
-            
             var reportsWindow = new ReportsWindow(_context);
             reportsWindow.Show();
         }
-
     }
 }

@@ -179,3 +179,7 @@ C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStore
 C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\bin\Debug\net9.0-windows\Newtonsoft.Json.dll
 C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\ReportsWindow.baml
 C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\ReportsWindow.g.cs
+C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\LoginWindow.baml
+C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\LoginWindow.g.cs
+C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\RegistrationWindow.baml
+C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\RegistrationWindow.g.cs

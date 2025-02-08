@@ -30,15 +30,15 @@ namespace OnlineStoreInventory
 
             if (string.IsNullOrWhiteSpace(reportType))
             {
-                MessageBox.Show("Please select a report type.");
+                MessageBox.Show("Пожалуйста, выберите тип отчета.");
                 return;
             }
 
-            if (reportType == "Inventory Report")
+            if (reportType == "Отчет об инвентаризации")
                 GenerateInventoryReport();
-            else if (reportType == "Supply Report")
+            else if (reportType == "Отчет о поставках")
                 GenerateSupplyReport(fromDate, toDate);
-            else if (reportType == "Shipment Report")
+            else if (reportType == "Отчет об отправке")
                 GenerateShipmentReport(fromDate, toDate);
         }
 

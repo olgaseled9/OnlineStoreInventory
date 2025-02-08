@@ -134,43 +134,65 @@ CREATE TABLE Report (
 );
 
 
+-- Заполнение таблицы Category
 INSERT INTO Category (Name, Description)
-VALUES ('Electronics', 'Электронные товары'),
-       ('Furniture', 'Мебель'),
-       ('Clothing', 'Одежда');
+VALUES
+    ('Электроника', 'Электронные устройства и гаджеты'),
+    ('Мебель', 'Домашняя и офисная мебель'),
+    ('Одежда', 'Модная и стильная одежда');
 GO
 
+-- Заполнение таблицы Product
+-- Обратите внимание: CategoryId соответствует порядку записей в таблице Category (1 – Электроника, 2 – Мебель, 3 – Одежда)
 INSERT INTO Product (Name, CategoryId, Barcode, Price, Weight, Dimensions, MinStock)
-VALUES ('Laptop', 1, '1234567890', 1200.00, 2.5, '35x25x3', 10),
-       ('Sofa', 2, '9876543210', 500.00, 50.0, '200x100x90', 5),
-       ('T-Shirt', 3, '1122334455', 20.00, 0.2, 'M', 50);
-GO
-INSERT INTO Stock (ProductId, Quantity, Location, IsInReserve)
-VALUES (1, 15, 'A1', 0),
-       (2, 3, 'B2', 0),
-       (3, 100, 'C3', 1);
+VALUES
+    ('Смартфон', 1, '1111111111', 15000.00, 0.2, '150x75x8 мм', 10),
+    ('Ноутбук', 1, '2222222222', 45000.00, 1.5, '350x250x20 мм', 5),
+    ('Диван', 2, '3333333333', 30000.00, 50.0, '200x90x100 см', 2),
+    ('Стул', 2, '4444444444', 5000.00, 7.0, '40x40x90 см', 15),
+    ('Футболка', 3, '5555555555', 800.00, 0.3, 'Размер M', 30),
+    ('Джинсы', 3, '6666666666', 2000.00, 0.7, 'Размер 42', 20);
 GO
 
+-- Заполнение таблицы PurchaseOrders (Заказы на закупку)
+INSERT INTO PurchaseOrders (Date, ProductId, Quantity, Status)
+VALUES
+    ('2023-01-15', 1, 20, 'В ожидании'),
+    ('2023-02-10', 3, 5, 'Завершен'),
+    ('2023-03-05', 5, 50, 'В процессе');
+GO
 
-INSERT INTO Supply (Date, Supplier, ProductId, Quantity, TotalCost)
-VALUES ('2025-01-01', 'Supplier1', 1, 10, 12000.00),
-       ('2025-01-02', 'Supplier2', 2, 5, 2500.00),
-       ('2025-01-03', 'Supplier3', 3, 200, 4000.00);
-GO
-INSERT INTO Shipment (Date, ProductId, Quantity, DeliveryAddress, ShipmentCost)
-VALUES ('2025-01-10', 1, 5, 'Address1', 30.00),
-       ('2025-01-11', 2, 2, 'Address2', 50.00),
-       ('2025-01-12', 3, 50, 'Address3', 100.00);
-GO
-INSERT INTO PurchaseOrder (Date, ProductId, Quantity, Status)
-VALUES ('2025-01-18T00:00:00', 1, 10, 'In Progress'),
-       ('2025-01-21T00:00:00', 2, 10, 'Completed'),
-       ('2025-01-22T00:00:00', 3, 150, 'In Progress');
-GO
+-- Заполнение таблицы Report (Отчёты)
 INSERT INTO Report (Date, Type, Data)
-VALUES ('2025-01-20T00:00:00', 'Inventory Report', 'Data in JSON or XML format'),
-       ('2025-01-21T00:00:00', 'Supply Report', 'Data in JSON or XML format');
+VALUES
+    ('2023-04-01', 'Инвентарный отчёт', '{ "Всего товаров": 100, "Товаров с низким запасом": 5 }'),
+    ('2023-04-15', 'Отчёт поставок', '{ "Всего поставок": 20, "Общая стоимость": 500000 }');
 GO
 
+-- Заполнение таблицы Shipment (Отгрузки)
+INSERT INTO Shipment (Date, ProductId, Quantity, DeliveryAddress, ShipmentCost)
+VALUES
+    ('2023-04-20', 2, 3, 'ул. Ленина, д. 10, Москва', 1500.00),
+    ('2023-04-22', 4, 10, 'пр. Мира, д. 5, Санкт-Петербург', 3000.00);
 GO
+
+-- Заполнение таблицы Stock (Складские запасы)
+INSERT INTO Stock (ProductId, Quantity, Location, IsInReserve)
+VALUES
+    (1, 8, 'Склад №1', 0),
+    (2, 4, 'Склад №1', 0),
+    (3, 1, 'Склад №2', 1),
+    (4, 20, 'Склад №2', 0),
+    (5, 25, 'Склад №3', 0),
+    (6, 15, 'Склад №3', 0);
+GO
+
+-- Заполнение таблицы Supply (Поставки)
+INSERT INTO Supply (Date, Supplier, ProductId, Quantity, TotalCost)
+VALUES
+    ('2023-04-10', 'Поставщик А', 1, 20, 300000.00),
+    ('2023-04-12', 'Поставщик Б', 3, 5, 150000.00),
+    ('2023-04-18', 'Поставщик В', 5, 50, 40000.00);
+GO
+
 

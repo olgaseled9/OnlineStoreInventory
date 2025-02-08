@@ -1,0 +1,68 @@
+﻿<Window x:Class="OnlineStoreInventory.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Регистрация пользователя" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Имя пользователя -->
+            <RowDefinition Height="Auto"/> <!-- Email -->
+            <RowDefinition Height="Auto"/> <!-- Полное имя -->
+            <RowDefinition Height="Auto"/> <!-- Адрес -->
+            <RowDefinition Height="Auto"/> <!-- Пароль -->
+            <RowDefinition Height="Auto"/> <!-- Подтверждение пароля -->
+            <RowDefinition Height="Auto"/> <!-- Выбор роли -->
+            <RowDefinition Height="Auto"/> <!-- Кнопка регистрации -->
+        </Grid.RowDefinitions>
+
+        <!-- Имя пользователя -->
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Имя пользователя:" FontSize="14"/>
+            <TextBox x:Name="UsernameTextBox" Width="300"/>
+        </StackPanel>
+
+        <!-- Email -->
+        <StackPanel Orientation="Vertical" Grid.Row="1" Margin="0,0,0,10">
+            <TextBlock Text="Email:" FontSize="14"/>
+            <TextBox x:Name="EmailTextBox" Width="300"/>
+        </StackPanel>
+
+        <!-- Полное имя -->
+        <StackPanel Orientation="Vertical" Grid.Row="2" Margin="0,0,0,10">
+            <TextBlock Text="Полное имя:" FontSize="14"/>
+            <TextBox x:Name="FullNameTextBox" Width="300"/>
+        </StackPanel>
+
+        <!-- Адрес -->
+        <StackPanel Orientation="Vertical" Grid.Row="3" Margin="0,0,0,10">
+            <TextBlock Text="Адрес:" FontSize="14"/>
+            <TextBox x:Name="AddressTextBox" Width="300"/>
+        </StackPanel>
+
+        <!-- Пароль -->
+        <StackPanel Orientation="Vertical" Grid.Row="4" Margin="0,0,0,10">
+            <TextBlock Text="Пароль:" FontSize="14"/>
+            <PasswordBox x:Name="PasswordBox" Width="300"/>
+        </StackPanel>
+
+        <!-- Подтверждение пароля -->
+        <StackPanel Orientation="Vertical" Grid.Row="5" Margin="0,0,0,10">
+            <TextBlock Text="Подтвердите пароль:" FontSize="14"/>
+            <PasswordBox x:Name="ConfirmPasswordBox" Width="300"/>
+        </StackPanel>
+
+        <!-- Выбор роли -->
+        <StackPanel Orientation="Vertical" Grid.Row="6" Margin="0,0,0,10">
+            <TextBlock Text="Роль:" FontSize="14"/>
+            <ComboBox x:Name="RoleComboBox" Width="300">
+                <!-- Роли можно задавать вручную или загружать из базы -->
+                <ComboBoxItem Content="User" />
+                <ComboBoxItem Content="Admin" />
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Кнопка регистрации -->
+        <Button Content="Зарегистрироваться" Grid.Row="7" Margin="0,0,0,10" Width="150" HorizontalAlignment="Center"
+                Click="OnRegisterClick"/>
+    </Grid>
+</Window>
