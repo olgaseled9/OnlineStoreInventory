@@ -267,5 +267,12 @@ namespace OnlineStoreInventory
             var groupedWindow = new GroupedProductsWindow(_context);
             groupedWindow.Show();
         }
+        
+        private void OnShowLowStockAlertsClick(object sender, RoutedEventArgs e)
+        {
+            // Передаем тот же ApplicationDbContext, который используется в основном окне
+            var alertsWindow = new LowStockAlertsWindow(_context);
+            alertsWindow.Show();
+        }
     }
 }

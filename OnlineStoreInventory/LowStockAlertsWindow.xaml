@@ -1,0 +1,18 @@
+﻿<Window x:Class="OnlineStoreInventory.LowStockAlertsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Low Stock Alerts" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="LowStockDataGrid" AutoGenerateColumns="False" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Идентификатор товара" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Название товара" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="
+Минимальный запас" Binding="{Binding MinStock}" Width="100"/>
+                <DataGridTextColumn Header="Текущее количество" Binding="{Binding TotalQuantity}" Width="120"/>
+                <DataGridTextColumn Header="
+Дефицит" Binding="{Binding Deficit}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

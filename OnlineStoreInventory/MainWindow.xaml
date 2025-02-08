@@ -29,6 +29,8 @@
             <Button Content="Удалить товар" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnDeleteProductClick" />
             <Button Content="Обновить товар" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnUpdateProductClick" />
             <Button Content="Отобразить товары по категориям" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnShowGroupedProductsClick"/>
+            <Button Content="Запасы товара" Click="OnShowLowStockAlertsClick" Margin="10"/>
+
             <!-- ListBox для отображения списка продуктов -->
             <ListBox Name="ProductListBox" Width="300" Height="200" Margin="0,5">
                 <ListBox.ItemTemplate>

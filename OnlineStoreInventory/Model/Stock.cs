@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStoreInventory;
 
+[Table("Stock")]
 public class Stock
 {
     [Key]
