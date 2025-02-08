@@ -167,3 +167,6 @@ C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStore
 C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\OnlineStoreInventory.pdb
 C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\OnlineStoreInventory.genruntimeconfig.cache
 C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\ref\OnlineStoreInventory.dll
+C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\OnlineStoreInventory.sourcelink.json
+C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\GroupedProductsWindow.baml
+C:\Users\OlgaSeledtsova\RiderProjects\SVPP\lab6\OnlineStoreInventory\OnlineStoreInventory\obj\Debug\net9.0-windows\GroupedProductsWindow.g.cs

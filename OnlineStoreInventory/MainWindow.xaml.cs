@@ -1,5 +1,8 @@
 ﻿using System.Windows;
-using OnlineStoreInventory.DataBase; // Проверьте правильность пространства имен
+using Microsoft.Extensions.DependencyInjection;
+using OnlineStoreInventory.DataBase;
+
+// Проверьте правильность пространства имен
 
 namespace OnlineStoreInventory
 {
@@ -12,10 +15,15 @@ namespace OnlineStoreInventory
         {
             _context = context;
             InitializeComponent();
-            
+
             // Пример загрузки данных после инициализации окна:
             LoadCategories();
             LoadProducts();
+        }
+
+        public MainWindow() : this(
+            ((App)Application.Current).ServiceProvider.GetRequiredService<ApplicationDbContext>())
+        {
         }
 
         // Загрузка категорий для ComboBox
@@ -92,6 +100,172 @@ namespace OnlineStoreInventory
 
             // Обновляем список продуктов
             LoadProducts();
+        }
+
+        // Обработчик клика по кнопке "Delete Product"
+        private void OnDeleteProductClick(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранный продукт из ListBox
+            var selectedProduct = ProductListBox.SelectedItem as Product;
+            if (selectedProduct == null)
+            {
+                MessageBox.Show("Please select a product to delete.");
+                return;
+            }
+
+            // Запрашиваем подтверждение у пользователя
+            var result = MessageBox.Show($"Are you sure you want to delete product \"{selectedProduct.Name}\"?",
+                "Confirm Deletion",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    // Удаляем выбранный продукт из базы данных
+                    _context.Products.Remove(selectedProduct);
+                    _context.SaveChanges();
+
+                    MessageBox.Show("Product deleted successfully!");
+
+                    // Обновляем список продуктов
+                    LoadProducts();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while deleting the product: {ex.Message}");
+                }
+            }
+        }
+
+        private void OnUpdateProductClick(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранный товар из ListBox
+            var selectedProduct = ProductListBox.SelectedItem as Product;
+            if (selectedProduct == null)
+            {
+                MessageBox.Show("Please select a product to update.");
+                return;
+            }
+
+            bool updated = false;
+
+            // Если имя изменилось, обновляем его
+            if (!string.IsNullOrWhiteSpace(ProductNameTextBox.Text) &&
+                ProductNameTextBox.Text != selectedProduct.Name)
+            {
+                selectedProduct.Name = ProductNameTextBox.Text;
+                updated = true;
+            }
+
+            // Если штрихкод изменился, обновляем его
+            if (!string.IsNullOrWhiteSpace(BarcodeTextBox.Text) &&
+                BarcodeTextBox.Text != selectedProduct.Barcode)
+            {
+                selectedProduct.Barcode = BarcodeTextBox.Text;
+                updated = true;
+            }
+
+            // Если цена изменена, пытаемся распарсить и обновить
+            if (!string.IsNullOrWhiteSpace(PriceTextBox.Text))
+            {
+                if (decimal.TryParse(PriceTextBox.Text, out decimal newPrice))
+                {
+                    if (newPrice != selectedProduct.Price)
+                    {
+                        selectedProduct.Price = newPrice;
+                        updated = true;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid price value.");
+                    return;
+                }
+            }
+
+            // Если вес изменился, пытаемся распарсить и обновить
+            if (!string.IsNullOrWhiteSpace(WeightTextBox.Text))
+            {
+                if (float.TryParse(WeightTextBox.Text, out float newWeight))
+                {
+                    if (newWeight != selectedProduct.Weight)
+                    {
+                        selectedProduct.Weight = newWeight;
+                        updated = true;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid weight value.");
+                    return;
+                }
+            }
+
+            // Если размеры изменились, обновляем их
+            if (!string.IsNullOrWhiteSpace(DimensionsTextBox.Text) &&
+                DimensionsTextBox.Text != selectedProduct.Dimensions)
+            {
+                selectedProduct.Dimensions = DimensionsTextBox.Text;
+                updated = true;
+            }
+
+            // Если минимальный остаток изменился, пытаемся распарсить и обновить
+            if (!string.IsNullOrWhiteSpace(MinStockTextBox.Text))
+            {
+                if (int.TryParse(MinStockTextBox.Text, out int newMinStock))
+                {
+                    if (newMinStock != selectedProduct.MinStock)
+                    {
+                        selectedProduct.MinStock = newMinStock;
+                        updated = true;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid minimum stock value.");
+                    return;
+                }
+            }
+
+            // Если категория изменена, обновляем её
+            if (CategoryComboBox.SelectedValue != null)
+            {
+                int newCategoryId = (int)CategoryComboBox.SelectedValue;
+                if (newCategoryId != selectedProduct.CategoryId)
+                {
+                    selectedProduct.CategoryId = newCategoryId;
+                    // Можно также обновить навигационное свойство
+                    selectedProduct.Category = _context.Categories.FirstOrDefault(c => c.Id == newCategoryId);
+                    updated = true;
+                }
+            }
+
+            if (!updated)
+            {
+                MessageBox.Show("No changes detected.");
+                return;
+            }
+
+            try
+            {
+                _context.Products.Update(selectedProduct);
+                _context.SaveChanges();
+
+                MessageBox.Show("Product updated successfully!");
+                LoadProducts(); // Обновляем список продуктов, если требуется
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating product: {ex.Message}");
+            }
+        }
+        
+        private void OnShowGroupedProductsClick(object sender, RoutedEventArgs e)
+        {
+            // Создаем новое окно и передаем в него текущий контекст БД
+            var groupedWindow = new GroupedProductsWindow(_context);
+            groupedWindow.Show();
         }
     }
 }

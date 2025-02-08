@@ -1,37 +1,39 @@
-﻿using System.Windows;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OnlineStoreInventory;
-using OnlineStoreInventory.DataBase;
-using OnlineStoreInventory.Services;
+using Microsoft.EntityFrameworkCore;
+using OnlineStoreInventory.DataBase; 
+using System;
+using System.Windows;
 
-public partial class App : Application
+namespace OnlineStoreInventory
 {
-    private readonly IHost _host;
-
-    public App()
+    public partial class App : Application
     {
-        _host = Host.CreateDefaultBuilder()
-            .ConfigureServices((context, services) =>
-            {
-                // Подключение базы данных
-                services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer("Server=localhost;Database=OnlineStoreInventoryDB;Trusted_Connection=True;"));
+        private readonly IHost _host;
+        public IServiceProvider ServiceProvider { get; private set; }
 
-                // Регистрация сервисов
-                services.AddScoped<IStockService, StockService>();
+        public App()
+        {
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    // Настройка подключения к БД с Windows-аутентификацией
+                    services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer("Server=localhost;Database=OnlineStoreInventoryDB;Trusted_Connection=True;TrustServerCertificate=True;"));
 
-                // Регистрация главного окна как Scoped
-                services.AddScoped<MainWindow>(); 
-            })
-            .Build();
-    }
 
-    protected override void OnStartup(StartupEventArgs e)
-    {
-        // Получение окна из DI контейнера
-        var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-        mainWindow.Show();
+                    // Регистрируем главное окно
+                    services.AddSingleton<MainWindow>();
+                })
+                .Build();
+
+            ServiceProvider = _host.Services;
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
+        }
     }
 }

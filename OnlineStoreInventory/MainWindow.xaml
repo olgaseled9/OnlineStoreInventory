@@ -4,29 +4,31 @@
         Title="MainWindow" Height="450" Width="600">
     <Grid>
         <StackPanel Margin="10">
-            <TextBlock Text="Product Name:" />
+            <TextBlock Text="Наименования товара:" />
             <TextBox Name="ProductNameTextBox" Width="300" Margin="0,5" />
 
-            <TextBlock Text="Category:" />
+            <TextBlock Text="Категория товара:" />
             <ComboBox Name="CategoryComboBox" Width="300" Margin="0,5"/>
 
-            <TextBlock Text="Barcode:" />
+            <TextBlock Text="Штрих-код:" />
             <TextBox Name="BarcodeTextBox" Width="300" Margin="0,5" />
 
-            <TextBlock Text="Price:" />
+            <TextBlock Text="Стоимость:" />
             <TextBox Name="PriceTextBox" Width="300" Margin="0,5" />
 
-            <TextBlock Text="Weight (kg):" />
+            <TextBlock Text="Вес (kg):" />
             <TextBox Name="WeightTextBox" Width="300" Margin="0,5" />
 
-            <TextBlock Text="Dimensions:" />
+            <TextBlock Text="Размеры:" />
             <TextBox Name="DimensionsTextBox" Width="300" Margin="0,5" />
 
-            <TextBlock Text="Min Stock:" />
+            <TextBlock Text="Минимальный запас:" />
             <TextBox Name="MinStockTextBox" Width="300" Margin="0,5" />
 
-            <Button Content="Add Product" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnAddProductClick"/>
-            
+            <Button Content="Добавить товар" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnAddProductClick"/>
+            <Button Content="Удалить товар" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnDeleteProductClick" />
+            <Button Content="Обновить товар" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnUpdateProductClick" />
+            <Button Content="Отобразить товары по категориям" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnShowGroupedProductsClick"/>
             <!-- ListBox для отображения списка продуктов -->
             <ListBox Name="ProductListBox" Width="300" Height="200" Margin="0,5">
                 <ListBox.ItemTemplate>

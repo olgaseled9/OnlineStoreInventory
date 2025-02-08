@@ -31,12 +31,12 @@ namespace OnlineStoreInventory.DataBase
 
             modelBuilder.Entity<Stock>()
                 .HasOne(s => s.Product)
-                .WithMany(p => p.Stocks)
+                .WithMany(p => p.Stock)
                 .HasForeignKey(s => s.ProductId);
 
             modelBuilder.Entity<Supply>()
                 .HasOne(s => s.Product)
-                .WithMany(p => p.Supplies)
+                .WithMany(p => p.Supply)
                 .HasForeignKey(s => s.ProductId);
 
             modelBuilder.Entity<Shipment>()
