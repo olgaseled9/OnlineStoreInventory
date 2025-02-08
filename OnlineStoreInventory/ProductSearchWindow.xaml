@@ -1,0 +1,55 @@
+﻿<Window x:Class="OnlineStoreInventory.ProductSearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Product Search" Height="500" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Панель фильтров -->
+        <StackPanel Orientation="Vertical" Grid.Row="0" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Product Name:" Width="100" VerticalAlignment="Center"/>
+                <TextBox x:Name="SearchTextBox" Width="200" />
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Price Range:" Width="100" VerticalAlignment="Center"/>
+                <TextBox x:Name="MinPriceTextBox" Width="80" Margin="0,0,5,0" ToolTip="Min Price"/>
+                <TextBlock Text="to" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox x:Name="MaxPriceTextBox" Width="80" ToolTip="Max Price"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Weight Range:" Width="100" VerticalAlignment="Center"/>
+                <TextBox x:Name="MinWeightTextBox" Width="80" Margin="0,0,5,0" ToolTip="Min Weight"/>
+                <TextBlock Text="to" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox x:Name="MaxWeightTextBox" Width="80" ToolTip="Max Weight"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBlock Text="Category:" Width="100" VerticalAlignment="Center"/>
+                <ComboBox x:Name="CategoryComboBox" Width="200"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Id"/>
+            </StackPanel>
+            
+            <!-- Кнопка для выполнения поиска -->
+            <Button Content="Search" Width="100" Click="OnSearchClick" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- DataGrid для отображения результатов поиска -->
+        <DataGrid x:Name="ResultsDataGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="100"/>
+                <DataGridTextColumn Header="Weight" Binding="{Binding Weight}" Width="100"/>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category.Name}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

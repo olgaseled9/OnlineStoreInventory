@@ -235,7 +235,7 @@ namespace OnlineStoreInventory
                 if (newCategoryId != selectedProduct.CategoryId)
                 {
                     selectedProduct.CategoryId = newCategoryId;
-                    // Можно также обновить навигационное свойство
+                    
                     selectedProduct.Category = _context.Categories.FirstOrDefault(c => c.Id == newCategoryId);
                     updated = true;
                 }
@@ -270,9 +270,24 @@ namespace OnlineStoreInventory
         
         private void OnShowLowStockAlertsClick(object sender, RoutedEventArgs e)
         {
-            // Передаем тот же ApplicationDbContext, который используется в основном окне
+            
             var alertsWindow = new LowStockAlertsWindow(_context);
             alertsWindow.Show();
         }
+        
+        private void OnOpenProductSearchClick(object sender, RoutedEventArgs e)
+        {
+
+            var searchWindow = new ProductSearchWindow(_context);
+            searchWindow.Show();
+        }
+        
+        private void OnOpenReportsClick(object sender, RoutedEventArgs e)
+        {
+            
+            var reportsWindow = new ReportsWindow(_context);
+            reportsWindow.Show();
+        }
+
     }
 }

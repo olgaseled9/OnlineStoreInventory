@@ -29,7 +29,9 @@
             <Button Content="Удалить товар" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnDeleteProductClick" />
             <Button Content="Обновить товар" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnUpdateProductClick" />
             <Button Content="Отобразить товары по категориям" Width="200" HorizontalAlignment="Center" Margin="10" Click="OnShowGroupedProductsClick"/>
-            <Button Content="Запасы товара" Click="OnShowLowStockAlertsClick" Margin="10"/>
+            <Button Content="Запасы товара" Width="200" Click="OnShowLowStockAlertsClick" Margin="10"/>
+            <Button Content="Расширенный поиск товаров" Width="200" Click="OnOpenProductSearchClick" Margin="10"/>
+            <Button Content="Отчеты и аналитика" Width="200" Click="OnOpenReportsClick" Margin="10"/>
 
             <!-- ListBox для отображения списка продуктов -->
             <ListBox Name="ProductListBox" Width="300" Height="200" Margin="0,5">

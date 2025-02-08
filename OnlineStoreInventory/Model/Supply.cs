@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStoreInventory;
 
+[Table("Supply")]
 public class Supply
 
 {

@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace OnlineStoreInventory;
 
+[Table("Shipment")]
 public class Shipment
 {
     public int Id { get; set; }
