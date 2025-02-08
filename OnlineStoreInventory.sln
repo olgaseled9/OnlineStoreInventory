@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreInventory", "OnlineStoreInventory\OnlineStoreInventory.csproj", "{B52BCBEE-01CE-4827-B9D0-F2605EE57009}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStoreInventory.Tests", "OnlineStoreInventory.Tests\OnlineStoreInventory.Tests.csproj", "{04382399-42A1-472C-A748-C5891410AEB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B52BCBEE-01CE-4827-B9D0-F2605EE57009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B52BCBEE-01CE-4827-B9D0-F2605EE57009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B52BCBEE-01CE-4827-B9D0-F2605EE57009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04382399-42A1-472C-A748-C5891410AEB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04382399-42A1-472C-A748-C5891410AEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04382399-42A1-472C-A748-C5891410AEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04382399-42A1-472C-A748-C5891410AEB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
