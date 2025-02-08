@@ -10,7 +10,6 @@ namespace OnlineStoreInventory.DataBase
         {
         }
 
-        // Ваши DbSet сущностей (например, категории, продукты, запасы и т. д.)
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Stock> Stocks { get; set; }
@@ -23,7 +22,6 @@ namespace OnlineStoreInventory.DataBase
         {
             base.OnModelCreating(modelBuilder);  // Это необходимо для Identity
 
-            // Настройка других сущностей (например, связи между категориями и продуктами)
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)

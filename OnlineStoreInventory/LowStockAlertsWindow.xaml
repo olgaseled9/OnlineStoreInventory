@@ -5,11 +5,11 @@
     <Grid>
         <DataGrid x:Name="LowStockDataGrid" AutoGenerateColumns="False" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Идентификатор товара" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Идентификатор товара" Binding="{Binding Id}" Width="150"/>
                 <DataGridTextColumn Header="Название товара" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="
-Минимальный запас" Binding="{Binding MinStock}" Width="100"/>
-                <DataGridTextColumn Header="Текущее количество" Binding="{Binding TotalQuantity}" Width="120"/>
+Минимальный запас" Binding="{Binding MinStock}" Width="150"/>
+                <DataGridTextColumn Header="Текущее количество" Binding="{Binding TotalQuantity}" Width="150"/>
                 <DataGridTextColumn Header="
 Дефицит" Binding="{Binding Deficit}" Width="100"/>
             </DataGrid.Columns>

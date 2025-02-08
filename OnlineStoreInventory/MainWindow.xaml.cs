@@ -39,7 +39,8 @@ namespace OnlineStoreInventory
         private void LoadProducts()
         {
             var products = _context.Products.ToList(); // Получаем все продукты из базы данных
-            ProductListBox.ItemsSource = products; // Привязываем их к ListBox
+            ProductListView.ItemsSource = products; // Привязываем их к ListBox
+
         }
 
         // Обработчик клика по кнопке "Add Product"
@@ -57,7 +58,7 @@ namespace OnlineStoreInventory
                 !float.TryParse(WeightTextBox.Text, out weight) ||
                 !int.TryParse(MinStockTextBox.Text, out minStock))
             {
-                MessageBox.Show("Please enter valid values for price, weight, and minimum stock.");
+                MessageBox.Show("Введите значения цены, веса и минимального запаса.");
                 return;
             }
 
@@ -65,7 +66,7 @@ namespace OnlineStoreInventory
 
             if (string.IsNullOrWhiteSpace(productName) || categoryId == null || string.IsNullOrWhiteSpace(barcode))
             {
-                MessageBox.Show("Please fill in all fields.");
+                MessageBox.Show("Пожалуйста, заполните все поля.");
                 return;
             }
 
@@ -96,7 +97,7 @@ namespace OnlineStoreInventory
             CategoryComboBox.SelectedIndex = -1;
 
             // Показываем успешное сообщение
-            MessageBox.Show("Product added successfully!");
+            MessageBox.Show("Товар успешно добавлен!");
 
             // Обновляем список продуктов
             LoadProducts();
@@ -106,15 +107,15 @@ namespace OnlineStoreInventory
         private void OnDeleteProductClick(object sender, RoutedEventArgs e)
         {
             // Получаем выбранный продукт из ListBox
-            var selectedProduct = ProductListBox.SelectedItem as Product;
+            var selectedProduct = ProductListView.SelectedItem as Product;
             if (selectedProduct == null)
             {
-                MessageBox.Show("Please select a product to delete.");
+                MessageBox.Show("Пожалуйста, выберите товар для удаления.");
                 return;
             }
 
             // Запрашиваем подтверждение у пользователя
-            var result = MessageBox.Show($"Are you sure you want to delete product \"{selectedProduct.Name}\"?",
+            var result = MessageBox.Show($"Вы уверены, что хотите удалить товар? \"{selectedProduct.Name}\"?",
                 "Confirm Deletion",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
@@ -126,14 +127,14 @@ namespace OnlineStoreInventory
                     _context.Products.Remove(selectedProduct);
                     _context.SaveChanges();
 
-                    MessageBox.Show("Product deleted successfully!");
+                    MessageBox.Show("Товар успешно удален!");
 
                     // Обновляем список продуктов
                     LoadProducts();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error occurred while deleting the product: {ex.Message}");
+                    MessageBox.Show($"Произошла ошибка при удалении товара: {ex.Message}");
                 }
             }
         }
@@ -141,10 +142,10 @@ namespace OnlineStoreInventory
         private void OnUpdateProductClick(object sender, RoutedEventArgs e)
         {
             // Получаем выбранный товар из ListBox
-            var selectedProduct = ProductListBox.SelectedItem as Product;
+            var selectedProduct = ProductListView.SelectedItem as Product;
             if (selectedProduct == null)
             {
-                MessageBox.Show("Please select a product to update.");
+                MessageBox.Show("Пожалуйста, выберите продукт для обновления данных.");
                 return;
             }
 
@@ -179,7 +180,7 @@ namespace OnlineStoreInventory
                 }
                 else
                 {
-                    MessageBox.Show("Invalid price value.");
+                    MessageBox.Show("Недопустимое значение цены.");
                     return;
                 }
             }
@@ -197,7 +198,7 @@ namespace OnlineStoreInventory
                 }
                 else
                 {
-                    MessageBox.Show("Invalid weight value.");
+                    MessageBox.Show("Неверное значение веса.");
                     return;
                 }
             }
@@ -223,7 +224,7 @@ namespace OnlineStoreInventory
                 }
                 else
                 {
-                    MessageBox.Show("Invalid minimum stock value.");
+                    MessageBox.Show("Неверная минимальная стоимость.");
                     return;
                 }
             }
@@ -252,12 +253,12 @@ namespace OnlineStoreInventory
                 _context.Products.Update(selectedProduct);
                 _context.SaveChanges();
 
-                MessageBox.Show("Product updated successfully!");
+                MessageBox.Show("Продукт успешно обновлен!");
                 LoadProducts(); // Обновляем список продуктов, если требуется
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error updating product: {ex.Message}");
+                MessageBox.Show($"Ошибка обновления продукта: {ex.Message}");
             }
         }
         

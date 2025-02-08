@@ -8,7 +8,6 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <!-- Заголовок группы будет отображать имя категории -->
                             <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Margin="0,5,0,5"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
@@ -16,11 +15,10 @@
             </ListView.GroupStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Product Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="80"/>
-                    <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}" Width="80"/>
-                    <GridViewColumn Header="Barcode" DisplayMemberBinding="{Binding Barcode}" Width="120"/>
-                    <!-- Добавьте другие столбцы по необходимости -->
+                    <GridViewColumn Header="Наименование товара" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                    <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Price}" Width="80"/>
+                    <GridViewColumn Header="Масса" DisplayMemberBinding="{Binding Weight}" Width="80"/>
+                    <GridViewColumn Header="Штрих-код" DisplayMemberBinding="{Binding Barcode}" Width="120"/>
                 </GridView>
             </ListView.View>
         </ListView>
